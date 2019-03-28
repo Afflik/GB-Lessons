@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Linq;
 
 namespace Lession1
 {
     class Game : Settings
     {
-        public static Settings[] _objs;
+        public static Settings[] allObjs;
+        public static Settings[] asteroids;
+        public static Settings[] littleStars;
+        public static Settings[] stars;
 
         public Game(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
@@ -19,35 +23,45 @@ namespace Lession1
             Ticker();
         }
 
+        public static void AddGameObject(int numObj,ref Settings[] objs, int lenght, int minX, int maxX, int factorX,
+                                      int minY, int maxY, int factorY, int speedMin, int speedMax,
+                                      int factorSpeed, int sizeMin, int sizeMax, int factorSize)
+        {
+            objs = new Settings[lenght];
+
+            for (int i = 0; i < objs.Length; i++)
+            {
+                int cordX = rng.Next(minX, maxX)* factorX;
+                int cordY = rng.Next(minY, maxY) * factorY;
+                int speed = rng.Next(speedMin, speedMax) * factorSpeed;
+                int size = rng.Next(sizeMin, sizeMax) * factorSize;
+
+                if (numObj == 1)
+                {
+                    objs[i] = new LittleStars(new Point(cordX, cordY), new Point(speed), new Size(size, size));
+                }
+                if (numObj == 2)
+                {
+                    objs[i] = new Stars(new Point(cordX, cordY), new Point(speed), new Size(size, size));
+                }
+                if (numObj == 3)
+                {
+                    objs[i] = new Asteroids(new Point(cordX, cordY), new Point(speed), new Size(size, size));
+                }
+            }
+        }
         public static void Load()
         {
-            _objs = new Settings[170];
-            for (int i = 0; i < 50; i++)
-            {
-                int lStarPlaceX = rng.Next(0, 160) * 5;
-                int lStarPlaceY = rng.Next(0, 120) * 5;
-                _objs[i] = new LittleStars(new Point(lStarPlaceX, lStarPlaceY), new Point(2), new Size(1, 1));
-            }
-            for (int i = 50; i < 150; i++)
-            {
-                int starSize = rng.Next(1, 5) * 5;
-                int starPlaceX = rng.Next(0, 160) * 5;
-                int starPlaceY = rng.Next(0, 160) * 5;
-                _objs[i] = new Stars(new Point(starPlaceX, starPlaceY), new Point(2), new Size(starSize, starSize));
-            }
-            for (int i = 150; i < 170; i++)
-            {
-                int astSpeed = rng.Next(3, 9);
-                int astSize = rng.Next(2, 11) * 5;
-                int astPlaceY = rng.Next(0, 7) * 100;
-                _objs[i] = new Asteroids(new Point(800, astPlaceY), new Point(astSpeed), new Size(astSize, astSize));
-            }
+            AddGameObject(1, ref littleStars, 50, 0, 160, 5, 0, 120, 5, 2, 3, 1, 1, 2, 1);
+            AddGameObject(2, ref stars, 50, 0, 160, 5, 0, 120, 5, 2, 3, 1, 1, 5, 5);
+            AddGameObject(3, ref asteroids, 20, 800, 801, 1, 0, 14, 50, 3, 11, 1, 3, 15, 5);
+
+            allObjs = littleStars.Concat(stars).Concat(asteroids).ToArray();
         }
         public static void Drawler()
         {
             Buffer.Graphics.Clear(Color.Black);
-            foreach (Settings obj in _objs) obj.Draw();
-
+            foreach (Settings obj in allObjs) obj.Draw();
             try
             {
                 Buffer.Render();
@@ -56,8 +70,7 @@ namespace Lession1
             {
                 Environment.Exit(0);
             }
-
-            foreach (Settings obj in _objs) obj.Update();
+            foreach (Settings obj in allObjs) obj.Update();
         }
         public static void Ticker()
         {
