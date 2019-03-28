@@ -6,6 +6,7 @@ namespace Lession1
 {
     class Asteroids: Settings
     {
+        protected int animCount = 0;
         protected Image img = Image.FromFile("asteroid.png");
 
         public Asteroids(Point pos, Point dir, Size size) : base(pos, dir, size)
@@ -19,6 +20,8 @@ namespace Lession1
         }
         public override void Update()
         {
+            animCount++;
+            if (animCount%5 == 4) img.RotateFlip(RotateFlipType.Rotate90FlipXY);
             Pos.X = Pos.X + Dir.X;
             if (Pos.X < -20)
             {
