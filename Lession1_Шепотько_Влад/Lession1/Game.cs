@@ -37,7 +37,7 @@ namespace Lession1
             }
             for (int i = 150; i < 170; i++)
             {
-                int astSpeed = rng.Next(5, 11);
+                int astSpeed = rng.Next(3, 9);
                 int astSize = rng.Next(2, 11) * 5;
                 int astPlaceY = rng.Next(0, 7) * 100;
                 _objs[i] = new Asteroids(new Point(800, astPlaceY), new Point(astSpeed), new Size(astSize, astSize));
@@ -69,5 +69,9 @@ namespace Lession1
         {
             Drawler();
         }
+
+        public override void Draw() { }
+
+        public override void Update() { }
     }
 }

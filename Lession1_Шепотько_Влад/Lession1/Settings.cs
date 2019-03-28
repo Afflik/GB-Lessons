@@ -35,7 +35,7 @@ namespace Lession1
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
         }
 
-        public virtual void Draw() { }
-        public virtual void Update() { }
+        public abstract void Draw();
+        public abstract void Update();
     }
 }
