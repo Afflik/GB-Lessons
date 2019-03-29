@@ -15,14 +15,13 @@ namespace Lession1
         }
         public override void Update()
         {
-            Pos.X = Pos.X - Dir.X;
+            Pos.X -= Dir.X;
             if (Pos.X < -20)
             {
                 Pos.X = Width + 10;
                 Pos.Y = rng.Next(0, 160) * 5;
 
             }
-            if (Pos.X > Width + 100) Dir.X = -Dir.X;
         }
     }
 }

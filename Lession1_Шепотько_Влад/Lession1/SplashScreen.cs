@@ -13,16 +13,16 @@ namespace Lession1
 {
     public partial class SplashScreen : Form
     {
-        Image title = Image.FromFile("title.png");
+        Image title = Image.FromFile("Menu/title.png");
 
-        Image play = Image.FromFile("play.png");
-        Image playOn = Image.FromFile("playON.png");
+        Image play = Image.FromFile("Menu/play.png");
+        Image playOn = Image.FromFile("Menu/playON.png");
 
-        Image cup = Image.FromFile("cup.png");
-        Image cupOn = Image.FromFile("cupON.png");
+        Image cup = Image.FromFile("Menu/cup.png");
+        Image cupOn = Image.FromFile("Menu/cupON.png");
 
-        Image exit = Image.FromFile("exit.png");
-        Image exitOn = Image.FromFile("exitON.png");
+        Image exit = Image.FromFile("Menu/exit.png");
+        Image exitOn = Image.FromFile("Menu/exitON.png");
 
         static void Main()
         {
@@ -52,9 +52,9 @@ namespace Lession1
             pictureBox3.MouseLeave += new EventHandler(pictureBox3_MouseLeave);
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+            private void pictureBox1_Click(object sender, EventArgs e)
         {
-            Form game = new Form { Width = 800, Height = 600 };
+            GameScene game = new GameScene { Width = 800, Height = 600 };
             game.StartPosition = FormStartPosition.Manual;
             game.Location = this.Location;
             Settings.Init(game);

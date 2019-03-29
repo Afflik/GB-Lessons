@@ -6,10 +6,8 @@ namespace Lession1
 {
     class Stars : Settings
     {
-        protected Image star1 = Image.FromFile("star1.png");
-        protected Image star2 = Image.FromFile("star2.png");
-        protected Image star3 = Image.FromFile("star3.png");
-        protected Image star4 = Image.FromFile("star4.png");
+        protected Image[] star = new Image[] {Image.FromFile("Stars/star1.png"), Image.FromFile("Stars/star2.png"),
+                                                Image.FromFile("Stars/star3.png"),Image.FromFile("Stars/star4.png") };
 
         protected Image img;
 
@@ -18,12 +16,8 @@ namespace Lession1
         }
         public override void Draw()
         {
-            int star = rng.Next(1, 5);
-
-            if (star == 1) img = star1;
-            if (star == 2) img = star2;
-            if (star == 3) img = star3;
-            if (star == 4) img = star4;
+            int starNum = rng.Next(0, 4);
+            img = star[starNum];
 
             Buffer.Graphics.DrawImage(img, Pos.X, Pos.Y, Size.Width, Size.Height);
             //Game.Buffer.Graphics.DrawLine(Pens.White, Pos.X, Pos.Y, Pos.X + Size.Width, Pos.Y + Size.Height);
@@ -31,14 +25,13 @@ namespace Lession1
         }
         public override void Update()
         {
-            Pos.X = Pos.X - Dir.X;
+            Pos.X -= Dir.X;
             if (Pos.X < -20)
             {
                 Pos.X = Width + 10;
                 Pos.Y = rng.Next(0, 160) * 5;
 
             }
-            if (Pos.X > Width + 100) Dir.X = -Dir.X;
         }
     }
 }

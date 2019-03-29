@@ -48,6 +48,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Asteroids.cs" />
+    <Compile Include="GameScene.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameScene.Designer.cs">
+      <DependentUpon>GameScene.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Laser.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,8 +65,11 @@
     <Compile Include="SplashScreen.Designer.cs">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Rocket.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Stars.cs" />
+    <EmbeddedResource Include="GameScene.resx">
+      <DependentUpon>GameScene.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
