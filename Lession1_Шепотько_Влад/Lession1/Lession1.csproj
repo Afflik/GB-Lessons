@@ -47,7 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cakes.cs" />
     <Compile Include="Asteroids.cs" />
+    <Compile Include="ICollision.cs" />
     <Compile Include="GameScene.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +68,8 @@
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Player.cs" />
+    <Compile Include="CustomException.cs" />
+    <Compile Include="GameInterface.cs" />
     <Compile Include="Stars.cs" />
     <EmbeddedResource Include="GameScene.resx">
       <DependentUpon>GameScene.cs</DependentUpon>

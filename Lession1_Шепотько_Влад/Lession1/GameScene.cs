@@ -18,6 +18,7 @@ namespace Lession1
             KeyDown += Form1_KeyDown;
         }
 
+        // задаем настройки управления персонажем
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -29,7 +30,10 @@ namespace Lession1
                     Player.playerPosY += 10;
                     break;
                 case Keys.Space:
-                    Player.isShooting = true;
+                    if (Laser.counter == Laser.laserTime)
+                    {
+                        Player.isShooting = true;
+                    }
                     break;
             }
         }

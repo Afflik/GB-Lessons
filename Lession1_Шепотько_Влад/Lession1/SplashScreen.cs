@@ -13,6 +13,8 @@ namespace Lession1
 {
     public partial class SplashScreen : Form
     {
+        public static GameScene game;
+
         Image title = Image.FromFile("Menu/title.png");
 
         Image play = Image.FromFile("Menu/play.png");
@@ -24,12 +26,15 @@ namespace Lession1
         Image exit = Image.FromFile("Menu/exit.png");
         Image exitOn = Image.FromFile("Menu/exitON.png");
 
+        GameInterface gInt = new GameInterface();
+
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new SplashScreen());
         }
+        // Кроме инициализации компонентов также настраивает кнопки меню на смену изображение при наведении
         public SplashScreen()
         {
             InitializeComponent();
@@ -51,17 +56,39 @@ namespace Lession1
             pictureBox3.MouseEnter += new EventHandler(pictureBox3_MouseEnter);
             pictureBox3.MouseLeave += new EventHandler(pictureBox3_MouseLeave);
         }
-
-            private void pictureBox1_Click(object sender, EventArgs e)
+        // Вызов формы с игрой
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
-            GameScene game = new GameScene { Width = 800, Height = 600 };
-            game.StartPosition = FormStartPosition.Manual;
-            game.Location = this.Location;
-            Settings.Init(game);
-            Game.Play();
-            Hide();
-            game.ShowDialog();
+            game = new GameScene();
+            try
+            {
+                Hide();
+                GameSceneStart(800, 600, FormStartPosition.CenterScreen);
+            }
+
+            catch (ArgumentOutOfRangeException outRange) 
+            {
+                MessageBox.Show(outRange.Message);
+                Environment.Exit(0);
+            }
         }
+        //Создание игровой сцены c проверкой на разрешение окна
+        public static void GameSceneStart(int width, int height, FormStartPosition stPos)
+        {
+            if (width != 800) throw new ArgumentOutOfRangeException("width", "Ширина окна должна быть строго 800 пикселей!");
+            else if (height != 600) throw new ArgumentOutOfRangeException("height", "Высота окна должна быть строго 600 пикселей!");
+            else
+            {
+                game.Width = width;
+                game.Height = height;
+                game.StartPosition = stPos;
+                Settings.Init(game);
+                Game.Play();
+                game.ShowDialog();
+                GameInterface.Load();
+            }
+        }
+
         private void pictureBox2_Click(object sender, EventArgs e)
         {
 
