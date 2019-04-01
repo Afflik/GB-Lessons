@@ -32,17 +32,12 @@ namespace Lession1
 
         public static void HealthBar() // создает  хилбар чтобы прибавлялось и уменьшалось хп игрока
         {
-            GameInterface.Text(isTakeDmg.ToString(), 20, 100, 120, new SolidBrush(Color.White));
-            GameInterface.Text(isTakeHealth.ToString(), 20, 100, 150, new SolidBrush(Color.White));
-            GameInterface.Text(n.ToString(), 20, 100, 170, new SolidBrush(Color.White));
-
-
             if (isTakeDmg && n >= 0) // Следим за потерей хп 
             {
                 temp[n] = '⬜';
                 healthBar = new string(temp);
                 isTakeDmg = false;
-                if(n != 0) n--;
+                if(n > 0) n--;
             }
             if (isTakeHealth && n < temp.Length) // Проверяем получили ли хил с кексика
             {
