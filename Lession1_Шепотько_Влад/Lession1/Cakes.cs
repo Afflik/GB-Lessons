@@ -41,6 +41,7 @@ namespace Lession1
                 isCakeDroped = false;
                 Pos.X = rng.Next(800, 1200);
                 Pos.Y = rng.Next(1, 7) * 100;
+                Player.cooldownHeal = 0;
             }
         }
         public override void Update(bool _bool)

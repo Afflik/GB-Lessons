@@ -121,9 +121,10 @@ namespace Lession1
             for (int i = 0; i < cakes.Count; i++) // здесь хилки проверяют столковения с игроком
             {
                 cakes[i].Update();
-                if (player.Collision(cakes[i])) 
+                if (player.Collision(cakes[i]))
                 {
-                    Player.isTakeHealth = true;
+                    Player.cooldownHeal++;
+                    if (Player.cooldownHeal == 1) Player.isTakeHealth = true;
                     cakes[i].Update(true);
                 }
                 if(laser.Collision(cakes[i]))
@@ -141,7 +142,8 @@ namespace Lession1
                 }
                 if (player.Collision(asteroids[i]))
                 {
-                    Player.isTakeDmg = true;
+                    Player.cooldownDmg++;
+                    if (Player.cooldownDmg == 1) Player.isTakeDmg = true;
                     asteroids[i].Update(true);
                 }
                 for (int j = 0; j < cakes.Count; j++)

@@ -57,8 +57,8 @@ namespace Lession1
                     Pos.X = Width + 10;
                     Dir.X = rng.Next(5, 12);
                     Pos.Y = rng.Next(0, 7) * 100;
+                    Player.cooldownDmg = 0;
                 }
-
             }
         }
         public override void Update(bool _bool)
