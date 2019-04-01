@@ -33,14 +33,14 @@ namespace Lession1
             }
             if (Pos.X < -40) // обычный спавн
             {
-                Pos.X = rng.Next(800,900);
-                Pos.Y = rng.Next(0, 700);
+                Pos.X = rng.Next(800,1200);
+                Pos.Y = rng.Next(1, 7) * 100;
             }
             if (_cake == explosionCake[explosionCake.Count - 1]) // спавнит заново кейк после взрыва
             {
                 isCakeDroped = false;
-                Pos.X = rng.Next(800, 900);
-                Pos.Y = rng.Next(0, 700);
+                Pos.X = rng.Next(800, 1200);
+                Pos.Y = rng.Next(1, 7) * 100;
             }
         }
         public override void Update(bool _bool)
