@@ -78,7 +78,7 @@ namespace Lession1
                 AddGameObject(1,ref littleStars, 50, 0, 160, 5, 0, 120, 5, 2, 3, 1, 1, 2, 1);
                 AddGameObject(2,ref stars, 50, 0, 160, 5, 0, 120, 5, 2, 3, 1, 1, 5, 5);
                 AddGameObject(3,ref asteroids, 20, 800, 801, 1, 1, 20, 30, 4, 8, 1, 10, 16, 5);
-                AddGameObject(4,ref cakes, 3, 700, 3001, 1, 1, 20, 30, 8, 9, 1, 14, 15, 5);
+                AddGameObject(4,ref cakes, 2, 750, 850, 1, 1, 701, 1, 8, 9, 1, 14, 15, 5);
                 for (int i = 0; i < littleStars.Count; i++)
                 {
                     allStars.Add(littleStars[i]);

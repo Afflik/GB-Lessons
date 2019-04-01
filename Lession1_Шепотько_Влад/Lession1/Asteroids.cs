@@ -22,6 +22,7 @@ namespace Lession1
 
         int cookieNum = rng.Next(0, 4);  // рандомный выбор одного из вариантов астероида
         int waitTime = rng.Next(1, 5) * 200; // переменная для задержки респавна астероида
+        int animTime = 0; // переменная для завершения анимации
 
         public Asteroids(Point pos, Point dir, Size size) : base(pos, dir, size) { }
 
@@ -43,15 +44,21 @@ namespace Lession1
             if (Pos.X + waitTime < -40) // обычный спавн
             {
                 Pos.X = Width + 10;
-                Dir.X = rng.Next(5, 15);
+                Dir.X = rng.Next(5, 12);
                 Pos.Y = rng.Next(0, 7) * 100;
             }
             if(cookie == explosion[explosion.Count - 1]) // спавнит заново метеор после взрыва
             {
-                isCrashed = false;
-                Pos.X = Width + waitTime;
-                Dir.X = rng.Next(5, 15);
-                Pos.Y = rng.Next(0, 7) * 100;
+                animTime++;
+                if(animTime == 3)
+                {
+                    animTime = 0;
+                    isCrashed = false;
+                    Pos.X = Width + 10;
+                    Dir.X = rng.Next(5, 12);
+                    Pos.Y = rng.Next(0, 7) * 100;
+                }
+
             }
         }
         public override void Update(bool _bool)
