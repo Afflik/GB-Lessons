@@ -126,7 +126,10 @@ namespace Lession1
                     Player.isTakeHealth = true;
                     cakes[i].Update(true);
                 }
-
+                if(laser.Collision(cakes[i]))
+                {
+                    cakes[i].Update(true);
+                }
             }
             laser.Update();
             for (int i = 0; i < asteroids.Count; i++) // здесь имбирные астероиды проверяют столкновения с хилками, игроком и лазером

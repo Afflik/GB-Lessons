@@ -33,14 +33,14 @@ namespace Lession1
             }
             if (Pos.X < -40) // обычный спавн
             {
-                Pos.X = rng.Next(700,900);
-                Pos.Y = rng.Next(0, 7) * 100;
+                Pos.X = rng.Next(800,900);
+                Pos.Y = rng.Next(0, 700);
             }
             if (_cake == explosionCake[explosionCake.Count - 1]) // спавнит заново кейк после взрыва
             {
                 isCakeDroped = false;
-                Pos.X = rng.Next(700, 900);
-                Pos.Y = rng.Next(0, 7) * 100;
+                Pos.X = rng.Next(800, 900);
+                Pos.Y = rng.Next(0, 700);
             }
         }
         public override void Update(bool _bool)
@@ -48,7 +48,7 @@ namespace Lession1
             isCakeDroped = _bool;
         }
 
-        public override Rectangle Rect => new Rectangle(Pos, Size);
+        public override Rectangle Rect => new Rectangle(Pos, new Size(60,60));
         public override bool Collision(ICollision o) => o.Rect.IntersectsWith(this.Rect);
     }
 }
