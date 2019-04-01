@@ -33,13 +33,13 @@ namespace Lession1
             }
             if (Pos.X < -40) // обычный спавн
             {
-                Pos.X = rng.Next(500,3001);
+                Pos.X = rng.Next(700,900);
                 Pos.Y = rng.Next(0, 7) * 100;
             }
             if (_cake == explosionCake[explosionCake.Count - 1]) // спавнит заново кейк после взрыва
             {
                 isCakeDroped = false;
-                Pos.X = rng.Next(500, 3001);
+                Pos.X = rng.Next(700, 900);
                 Pos.Y = rng.Next(0, 7) * 100;
             }
         }
