@@ -49,6 +49,12 @@
   <ItemGroup>
     <Compile Include="Cakes.cs" />
     <Compile Include="Asteroids.cs" />
+    <Compile Include="EndGame.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EndGame.Designer.cs">
+      <DependentUpon>EndGame.cs</DependentUpon>
+    </Compile>
     <Compile Include="ICollision.cs" />
     <Compile Include="GameScene.cs">
       <SubType>Form</SubType>
@@ -71,6 +77,9 @@
     <Compile Include="CustomException.cs" />
     <Compile Include="GameInterface.cs" />
     <Compile Include="Stars.cs" />
+    <EmbeddedResource Include="EndGame.resx">
+      <DependentUpon>EndGame.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GameScene.resx">
       <DependentUpon>GameScene.cs</DependentUpon>
     </EmbeddedResource>
@@ -82,6 +91,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="SplashScreen.resx">
       <DependentUpon>SplashScreen.cs</DependentUpon>
@@ -98,6 +108,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Player\Death\death13.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Player\player.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Menu\player.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Menu\end.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

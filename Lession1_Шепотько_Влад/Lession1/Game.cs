@@ -106,50 +106,59 @@ namespace Lession1
         private static void Drawler(object sender, EventArgs e)
         {
             Buffer.Graphics.Clear(Color.Black);
-            foreach (Settings obj in allStars) obj.Draw();
-            laser.Draw();
-            player.Draw();
-            foreach (Settings obj in cakes) obj.Draw();
-            foreach (Settings obj in asteroids) obj.Draw();
-
-            GameInterface.Load(); //Служит для загрузки интерфейса
-
-            Render();
-
-            foreach (Settings obj in allStars) obj.Update();
-            player.Update();
-            for (int i = 0; i < cakes.Count; i++) // здесь хилки проверяют столковения с игроком
+            if (!Player.isDied)
             {
-                cakes[i].Update();
-                if (player.Collision(cakes[i]))
+                foreach (Settings obj in allStars) obj.Draw();
+                laser.Draw();
+                if (!Player.isDeath) player.Draw();
+                foreach (Settings obj in cakes) obj.Draw();
+                foreach (Settings obj in asteroids) obj.Draw();
+                GameInterface.Load(); //Служит для загрузки интерфейса
+                if (Player.isDeath) player.Draw();
+
+                Render();
+
+                foreach (Settings obj in allStars) obj.Update();
+                player.Update();
+                for (int i = 0; i < cakes.Count; i++) // здесь хилки проверяют столковения с игроком
                 {
-                    Player.cooldownHeal++;
-                    if (Player.cooldownHeal == 1) Player.isTakeHealth = true;
-                    cakes[i].Update(true);
+                    cakes[i].Update();
+                    if (player.Collision(cakes[i]))
+                    {
+                        Player.cooldownHeal++;
+                        if (Player.cooldownHeal == 1) Player.isTakeHealth = true;
+                        cakes[i].Update(true);
+                    }
+                    if (laser.Collision(cakes[i]))
+                    {
+                        cakes[i].Update(true);
+                    }
                 }
-                if(laser.Collision(cakes[i]))
+                laser.Update();
+                for (int i = 0; i < asteroids.Count; i++) // здесь имбирные астероиды проверяют столкновения с хилками, игроком и лазером
                 {
-                    cakes[i].Update(true);
+                    asteroids[i].Update();
+                    if (laser.Collision(asteroids[i]) && Player.isShooting) // Проверяем активность и взаимодействие лазера с астероидом
+                    {
+                        asteroids[i].Update(true);
+                    }
+                    if (player.Collision(asteroids[i]))
+                    {
+                        Player.cooldownDmg++;
+                        if (Player.cooldownDmg == 1) Player.isTakeDmg = true;
+                        asteroids[i].Update(true);
+                    }
+                    for (int j = 0; j < cakes.Count; j++)
+                    {
+                        if (cakes[j].Collision(asteroids[i])) cakes[j].Update(true);
+                    }
                 }
             }
-            laser.Update();
-            for (int i = 0; i < asteroids.Count; i++) // здесь имбирные астероиды проверяют столкновения с хилками, игроком и лазером
+            else
             {
-                asteroids[i].Update();
-                if(laser.Collision(asteroids[i]) && Player.isShooting) // Проверяем активность и взаимодействие лазера с астероидом
-                {
-                    asteroids[i].Update(true);
-                }
-                if (player.Collision(asteroids[i]))
-                {
-                    Player.cooldownDmg++;
-                    if (Player.cooldownDmg == 1) Player.isTakeDmg = true;
-                    asteroids[i].Update(true);
-                }
-                for (int j = 0; j < cakes.Count; j++)
-                {
-                    if(cakes[j].Collision(asteroids[i])) cakes[j].Update(true);
-                }
+                player.Draw();
+                Render();
+                player.Update();
             }
         }
 

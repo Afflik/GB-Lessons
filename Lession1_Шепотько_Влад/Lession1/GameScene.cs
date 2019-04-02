@@ -12,10 +12,17 @@ namespace Lession1
 {
     public partial class GameScene : Form
     {
+        EndGame endGame = new EndGame();
+        public static bool over = false;
+
         public GameScene()
         {
             InitializeComponent();
             KeyDown += Form1_KeyDown;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Settings.Timer(EndGameForm, 1, true);
         }
 
         // задаем настройки управления персонажем
@@ -24,10 +31,16 @@ namespace Lession1
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    Player.playerPosY -= 10;
+                    if (!Player.isDeath)
+                    {
+                        Player.playerPosY -= 10;
+                    }
                     break;
                 case Keys.S:
-                    Player.playerPosY += 10;
+                    if (!Player.isDeath)
+                    {
+                        Player.playerPosY += 10;
+                    }
                     break;
                 case Keys.Space:
                     if (Laser.counter == Laser.laserTime)
@@ -35,6 +48,24 @@ namespace Lession1
                         Player.isShooting = true;
                     }
                     break;
+            }
+        }
+
+        public void EndGameForm(object sender, EventArgs e)
+        {
+            if (Player.openEndScene)
+            {
+                over = true;
+                Player.openEndScene = false;
+                IsMdiContainer = true;
+                endGame.MdiParent = this;
+                endGame.TopLevel = false;
+                endGame.FormBorderStyle = FormBorderStyle.None;
+                endGame.Dock = DockStyle.Fill;
+                endGame.Visible = true;
+                endGame.ControlBox = false;
+                endGame.Text = String.Empty;
+                endGame.Show();
             }
         }
     }

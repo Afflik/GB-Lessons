@@ -1,5 +1,4 @@
-﻿using Lession1.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,7 +13,6 @@ namespace Lession1
     public partial class SplashScreen : Form
     {
         public static GameScene game;
-
         Image title = Image.FromFile("Menu/title.png");
 
         Image play = Image.FromFile("Menu/play.png");
@@ -38,6 +36,11 @@ namespace Lession1
         public SplashScreen()
         {
             InitializeComponent();
+            MaximizeBox = false;
+            MinimizeBox = false;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+
+
             pictureBox4.Image = title;
             pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
 

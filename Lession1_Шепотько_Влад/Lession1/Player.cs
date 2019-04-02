@@ -13,16 +13,30 @@ namespace Lession1
         //cooldownHeal и cooldownDmg нужны для создания кулдауна в промежутках получения урона или лечения
         public static int cooldownHeal = 0; // переменная для проверки получения хила
         public static int cooldownDmg = 0; // переменная для проверки получения урона
+        public static int deathCount = 4;
 
 
         protected static Image player;
         protected static List<Image> playerAnim = new List<Image> {Image.FromFile("Player/player1.png"), Image.FromFile("Player/player2.png"),
-                                                                   Image.FromFile("Player/player3.png"),Image.FromFile("Player/player4.png") };
-        protected static List<Image> attackAnim = new List<Image> {Image.FromFile("Player/attack.png"), Image.FromFile("Player/attack2.png"),
-                                                                   Image.FromFile("Player/attack3.png"),Image.FromFile("Player/attack4.png") };
+                                                                   Image.FromFile("Player/player3.png"), Image.FromFile("Player/player4.png") };
 
+        protected static List<Image> attackAnim = new List<Image> {Image.FromFile("Player/attack.png"),  Image.FromFile("Player/attack2.png"),
+                                                                   Image.FromFile("Player/attack3.png"), Image.FromFile("Player/attack4.png") };
+
+        protected static List<Image> death = new List<Image> {Image.FromFile("Player/Death/death1.png"), Image.FromFile("Player/Death/death2.png"),
+                                                              Image.FromFile("Player/Death/death5.png"), Image.FromFile("Player/Death/death6.png"),
+                                                              Image.FromFile("Player/Death/death7.png"), Image.FromFile("Player/Death/death9.png"),
+                                                              Image.FromFile("Player/Death/death10.png"),Image.FromFile("Player/Death/death11.png"),
+                                                              Image.FromFile("Player/Death/death12.png"),Image.FromFile("Player/Death/death13.png"),
+                                                              Image.FromFile("Player/Death/death14.png"),Image.FromFile("Player/Death/death15.png"),
+                                                              Image.FromFile("Player/Death/death16.png"),Image.FromFile("Player/Death/death17.png")};
         public static Point playerPos;
         public static int playerPosY = 300;
+
+        public static bool isDeath = false;
+        public static bool isDied = false;
+        public static bool openEndScene = false;
+
         public static bool isTakeDmg = false;
         public static bool isTakeHealth = false;
         public static bool isShooting = false; // переменная на проберку был ли сделан выстрел
@@ -32,12 +46,14 @@ namespace Lession1
 
         public static void HealthBar() // создает  хилбар чтобы прибавлялось и уменьшалось хп игрока
         {
+            if (n == -1) isDeath = true;
             if (isTakeDmg && n >= 0) // Следим за потерей хп 
             {
                 temp[n] = '⬜';
                 healthBar = new string(temp);
                 isTakeDmg = false;
-                if(n > 0) n--;
+                n--;
+                if (n == -1) isDeath = true;
             }
             if (isTakeHealth && n < temp.Length) // Проверяем получили ли хил с кексика
             {
@@ -45,6 +61,29 @@ namespace Lession1
                 temp[n] = '⬛';
                 healthBar = new string(temp);
                 isTakeHealth = false;
+            }
+        }
+
+        public void Dead()
+        {
+            player = Animator(death, 5);
+            if (deathCount == 4)
+            {
+                playerPos.X += 80;
+                playerPosY -= 20;
+                deathCount += 1;
+            }
+            if (deathCount < death.Count && player == death[deathCount])
+            {
+                if (deathCount > 4)
+                {
+                    playerPos.X = 0;
+                    playerPosY = 0;
+                }
+                Size = new Size(800, 600);
+                if (deathCount == 8) isDied = true;
+                if (deathCount == death.Count - 1) openEndScene = true;
+                 deathCount++;
             }
         }
 
@@ -58,16 +97,20 @@ namespace Lession1
         }
         public override void Draw()
         {
-            HealthBar();
-            playerPos.X = Pos.X;
-            playerPos.Y = playerPosY;
-            if (!isShooting) 
-            {
-                player = Animator(playerAnim, 3); //функция в Settings для создания анимации
-            }
+            if(isDeath)Dead();
             else
             {
-                player = Animator(attackAnim, 3); //функция в Settings для создания анимации
+                HealthBar();
+                playerPos.X = Pos.X;
+                playerPos.Y = playerPosY;
+                if (!isShooting)
+                {
+                    player = Animator(playerAnim, 3); //функция в Settings для создания анимации
+                }
+                else
+                {
+                    player = Animator(attackAnim, 3); //функция в Settings для создания анимации
+                }
             }
             Buffer.Graphics.DrawImage(player, playerPos.X, playerPosY, Size.Width, Size.Height);
         }
