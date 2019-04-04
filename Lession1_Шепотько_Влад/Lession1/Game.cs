@@ -24,7 +24,7 @@ namespace Lession1
         public static void Play() // основная функция для запуска игры
         {
             Load();
-            Timer(Drawler,30,true);
+            Timer(Drawler,30);
         } 
 
         public static void PlayerSet() // Игрок

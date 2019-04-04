@@ -41,7 +41,6 @@
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Image = global::Lession1.Properties.Resources.end;
             this.pictureBox2.Location = new System.Drawing.Point(52, 27);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(657, 152);
@@ -51,7 +50,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::Lession1.Properties.Resources.player;
+            this.pictureBox1.Image = global::Lession1.Properties.Resources.player2;
             this.pictureBox1.Location = new System.Drawing.Point(-160, 206);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(714, 361);

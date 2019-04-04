@@ -25,7 +25,7 @@ namespace Lession1
             else Text(Laser.laserBar, 12, 85, 40, new SolidBrush(Color.DarkRed));
 
             Text("SCORE: ", 16, 0, 69, new SolidBrush(Color.WhiteSmoke));
-            Text(score.ToString(), 15, 85, 69, new SolidBrush(Asteroids.color));
+            Text(score.ToString(), 15, 85, 69, new SolidBrush(Color.WhiteSmoke));
         }
 
         public override void Update() { }

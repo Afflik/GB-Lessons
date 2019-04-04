@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,8 +15,8 @@ namespace Lession1
     public partial class SplashScreen : Form
     {
         public static GameScene gameFormActive;
-
-        Image title = Image.FromFile("Menu/title.png");
+        
+        SoundPlayer menuSong = new SoundPlayer("music/menu.wav");
 
         Image play = Image.FromFile("Menu/play.png");
         Image playOn = Image.FromFile("Menu/playON.png");
@@ -35,27 +36,28 @@ namespace Lession1
         // Кроме инициализации компонентов также настраивает кнопки меню на смену изображение при наведении
         public SplashScreen()
         {
+            menuSong.PlayLooping();
             InitializeComponent();
             MaximizeBox = false;
             MinimizeBox = false;
+            label1.Parent = pictureBox4;
             StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.FixedDialog;
 
-
-            pictureBox4.Image = title;
-            pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
-
             pictureBox1.Image = play;
+            pictureBox1.Parent = pictureBox4;
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.MouseEnter += new EventHandler(pictureBox1_MouseEnter);
             pictureBox1.MouseLeave += new EventHandler(pictureBox1_MouseLeave);
 
             pictureBox2.Image = cup;
+            pictureBox2.Parent = pictureBox4;
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.MouseEnter += new EventHandler(pictureBox2_MouseEnter);
             pictureBox2.MouseLeave += new EventHandler(pictureBox2_MouseLeave);
 
             pictureBox3.Image = exit;
+            pictureBox3.Parent = pictureBox4;
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.MouseEnter += new EventHandler(pictureBox3_MouseEnter);
             pictureBox3.MouseLeave += new EventHandler(pictureBox3_MouseLeave);
@@ -82,6 +84,7 @@ namespace Lession1
             else if (height != 600) throw new ArgumentOutOfRangeException("height", "Высота окна должна быть строго 600 пикселей!");
             else
             {
+                menuSong.Stop();
                 GameScene game = new GameScene();
                 gameFormActive = game;
                 game.Width = width;

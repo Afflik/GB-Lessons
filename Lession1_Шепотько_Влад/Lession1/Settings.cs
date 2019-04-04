@@ -37,12 +37,12 @@ namespace Lession1
         public virtual int time { get; set; }  // таймер для анимации
         public virtual int anim { get; set; }  // обозначает кадр анимации 
 
-        public static void Timer(EventHandler method, int interval, bool isActive) // Таймер
+        public static void Timer(EventHandler method, int interval) // Таймер
         {
-            Timer timer = new Timer { Interval = interval };
-            timer.Start();
-            timer.Tick += method;
-            timer.Enabled = true;
+
+                Timer timer = new Timer { Interval = interval };
+                timer.Start();
+                timer.Tick += method;
         }
 
         public Image Animator(List<Image> imgArray, int slowFactory) // создания анимации из списка изображений

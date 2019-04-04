@@ -35,7 +35,7 @@ namespace Lession1
             pictureBox2.Visible = false;
             x = pictureBox1.Location.X;
             y = pictureBox1.Location.Y;
-            Settings.Timer(CatAnim, 30, true);
+            Settings.Timer(CatAnim, 30);
         }
 
         public void CatAnim(object sender, EventArgs e)
@@ -44,7 +44,7 @@ namespace Lession1
             {
                 if (x != -160)
                 {
-                    x += 5;
+                    x += 4;
                 }
                 else
                 {

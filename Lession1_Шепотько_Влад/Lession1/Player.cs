@@ -4,11 +4,17 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Diagnostics;
+using System.Media;
+using System.Windows.Media;
 
 namespace Lession1
 {
     class Player : Settings
     {
+        SoundPlayer sound = new SoundPlayer("music/theme.wav");
+        MediaPlayer deadSong = new MediaPlayer();
+        MediaPlayer gameOverSong = new MediaPlayer();
+
         public static string healthBar = "⬛⬛⬛⬛";
         public static char[] temp = healthBar.ToCharArray(); // Создаю массив строчки чтобы менять состояния индикатора
         public static int n = temp.Length-1;
@@ -44,19 +50,27 @@ namespace Lession1
         public static bool isTakeHealth = false;
         public static bool isShooting = false; // переменная на проберку был ли сделан выстрел
 
-        public Player(Point pos, Point dir, Size size) : base(pos, dir, size) { }
-
-
-        public static void HealthBar() // создает  хилбар чтобы прибавлялось и уменьшалось хп игрока
+        public Player(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
-            if (n == -1) isDeath = true;
+            sound.PlayLooping();
+        }
+
+
+        public void HealthBar() // создает  хилбар чтобы прибавлялось и уменьшалось хп игрока
+        {
             if (isTakeDmg && n >= 0) // Следим за потерей хп 
             {
                 temp[n] = '⬜';
                 healthBar = new string(temp);
                 isTakeDmg = false;
                 n--;
-                if (n == -1) isDeath = true;
+                if (n == -1)
+                {
+                    isDeath = true;
+                    deadSong.Open(new Uri("music/boom.wav", UriKind.Relative));
+                    deadSong.Volume = 1;
+                    deadSong.Play();
+                }
             }
             if (isTakeHealth && n < temp.Length) // Проверяем получили ли хил с кексика
             {
@@ -69,6 +83,7 @@ namespace Lession1
 
         public void Dead()
         {
+
             player = Animator(death, 5);
             if (deathCount == 4)
             {
@@ -84,8 +99,19 @@ namespace Lession1
                     playerPosY = 0;
                 }
                 Size = new Size(800, 600);
-                if (deathCount == 8) isDied = true;
-                if (deathCount == death.Count - 1) openEndScene = true;
+                if (deathCount == 8)
+                {
+                    sound.Stop();
+                    isDied = true;
+                }
+                if (deathCount == death.Count - 1)
+                {
+                    gameOverSong.Open(new Uri("music/end.wav", UriKind.Relative));
+                    gameOverSong.Volume = 1;
+                    gameOverSong.Play();
+
+                    openEndScene = true;
+                }
                  deathCount++;
             }
         }
@@ -106,11 +132,15 @@ namespace Lession1
                 string _heal = $"{_time}: " + ((n == 2) ? "Кексик полностью залечил лицо котику." : "Кексик подлатал личико котика на одно HP.");
                 string _dmg = (n == 0) ? "\nИгра закончена!\n" : $"{_time}: Печенька врезалась в котика и снесла ему четверть лица, осталось HP: {Player.n}";
                 string _score = $"\nСчет за игру: {GameInterface.score}.";
+                string _cookie = $"{_time}: " + "Котик испепелил пряник.";
+                string _cake = $"{_time}: " + "Котик беспощадно испепелил кексик.";
 
                 Action score = () => { Debug.WriteLine(_score); log.WriteLine(_score); };
                 Action start = () => { Debug.WriteLine(_start); log.WriteLine(_start); };
                 Action damage = () => { Debug.WriteLine(_dmg); log.WriteLine(_dmg); };
                 Action heal = () => { Debug.WriteLine(_heal); log.WriteLine(_heal); };
+                Action cookie = () => { Debug.WriteLine(_cookie); log.WriteLine(_cookie); };
+                Action cake = () => { Debug.WriteLine(_cake); log.WriteLine(_cake); };
 
                 if (isTakeDmg && n == 0)
                 {
@@ -129,6 +159,16 @@ namespace Lession1
                 if (isTakeHealth && n < temp.Length-1)
                 {
                     heal();
+                }
+                if (Asteroids.destroyCookie)
+                {
+                    Asteroids.destroyCookie = false;
+                    cookie();
+                }
+                if(Cakes.destroyCake)
+                {
+                    Cakes.destroyCake = false;
+                    cake();
                 }
             }
 

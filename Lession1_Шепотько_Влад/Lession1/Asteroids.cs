@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Diagnostics;
+using System.Windows.Media;
+using System.IO;
 
 namespace Lession1
 {
     class Asteroids: Settings
     {
-        public static Color color = Color.WhiteSmoke;
+        MediaPlayer boomSong = new MediaPlayer();
+
+        public static bool destroyCookie = false;
 
         protected static Size _size;
         protected int animCount = 0;
@@ -69,24 +73,32 @@ namespace Lession1
         }
         public override void Update(bool _bool)
         {
+            if (Player.isTakeDmg)
+            {
+                boomSong.Open(new Uri("music/boom.wav", UriKind.Relative));
+                boomSong.Volume = 0.5;
+                boomSong.Play();
+            }
             if (sc == 0 && Player.isShooting)
             {
-                Action cookie = () => { Debug.WriteLine($"{_time}: " + "Котик испепелил пряник."); };
-                cookie();
-                color = Color.Yellow;
+                destroyCookie = true;
+
+                boomSong.Open(new Uri("music/boom.wav", UriKind.Relative));
+                boomSong.Volume = 0.5;
+                boomSong.Play();
+                
                 GameInterface.score += score;
                 sc++;
             }
             else if (Player.isTakeDmg && GameInterface.score > 0)
             {
-                color = Color.Red;
                 GameInterface.score -= score;
             }
-            else if (!Player.isTakeDmg || !Player.isShooting) color = Color.WhiteSmoke;
             isCrashed = _bool;
+            
         }
 
-        public override Rectangle Rect => new Rectangle(new Point(Pos.X + waitTime,Pos.Y), _size);
+        public override Rectangle Rect => new Rectangle(new Point(Pos.X + waitTime,Pos.Y), _size + new Size(-30, 0));
         public override bool Collision(ICollision o) => o.Rect.IntersectsWith(this.Rect);
     }
 }

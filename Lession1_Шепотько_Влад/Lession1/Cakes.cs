@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Diagnostics;
+using System.Windows.Media;
+using System.IO;
 
 namespace Lession1
 {
     class Cakes : Settings
     {
+        int pl;
+        MediaPlayer cakeSong = new MediaPlayer();
+
+        public static bool destroyCake = false;
+
         protected Image _cake;
         protected Image cake = Image.FromFile("Bonus/HealthCake.png");
 
@@ -43,10 +50,22 @@ namespace Lession1
                 Pos.Y = rng.Next(1, 14) * 50;
                 Player.cooldownHeal = 0;
                 isCakeDroped = false;
+                pl = 0;
+            }
+            if(_cake == explosionCake[0])
+            {
+                cakeSong.Open(new Uri("music/cake.wav", UriKind.Relative));
+                cakeSong.Volume = 0.7;
+                cakeSong.Play();
             }
         }
         public override void Update(bool _bool)
         {
+            if (pl == 0 && Player.isShooting)
+            {
+                destroyCake = true;
+                pl++;
+            }
                 isCakeDroped = _bool;
         }
 
