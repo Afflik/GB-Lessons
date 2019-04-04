@@ -63,6 +63,13 @@
       <DependentUpon>GameScene.cs</DependentUpon>
     </Compile>
     <Compile Include="Laser.cs" />
+    <Compile Include="Records.cs" />
+    <Compile Include="RecordsScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RecordsScreen.Designer.cs">
+      <DependentUpon>RecordsScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -93,6 +100,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="RecordsScreen.resx">
+      <DependentUpon>RecordsScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SplashScreen.resx">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </EmbeddedResource>

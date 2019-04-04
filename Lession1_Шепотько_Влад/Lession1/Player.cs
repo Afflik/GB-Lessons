@@ -1,20 +1,21 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace Lession1
 {
     class Player : Settings
     {
         public static string healthBar = "⬛⬛⬛⬛";
-        protected static char[] temp = healthBar.ToCharArray(); // Создаю массив строчки чтобы менять состояния индикатора
+        public static char[] temp = healthBar.ToCharArray(); // Создаю массив строчки чтобы менять состояния индикатора
         public static int n = temp.Length-1;
         //cooldownHeal и cooldownDmg нужны для создания кулдауна в промежутках получения урона или лечения
         public static int cooldownHeal = 0; // переменная для проверки получения хила
         public static int cooldownDmg = 0; // переменная для проверки получения урона
         public static int deathCount = 4;
-
 
         protected static Image player;
         protected static List<Image> playerAnim = new List<Image> {Image.FromFile("Player/player1.png"), Image.FromFile("Player/player2.png"),
@@ -32,6 +33,8 @@ namespace Lession1
                                                               Image.FromFile("Player/Death/death16.png"),Image.FromFile("Player/Death/death17.png")};
         public static Point playerPos;
         public static int playerPosY = 300;
+
+        protected static int startDebug;
 
         public static bool isDeath = false;
         public static bool isDied = false;
@@ -95,12 +98,48 @@ namespace Lession1
                 playerPos.Y = playerPosY;
             }
         }
+        public static void Debugger() //Вывод лога в консоль и запись в файл
+        {
+            using (StreamWriter log = File.AppendText("log.ini"))
+            {
+                string _start = "\nНачинается игра!\n";
+                string _heal = $"{_time}: " + ((n == 2) ? "Кексик полностью залечил лицо котику." : "Кексик подлатал личико котика на одно HP.");
+                string _dmg = (n == 0) ? "\nИгра закончена!\n" : $"{_time}: Печенька врезалась в котика и снесла ему четверть лица, осталось HP: {Player.n}";
+                string _score = $"\nСчет за игру: {GameInterface.score}.";
+
+                Action score = () => { Debug.WriteLine(_score); log.WriteLine(_score); };
+                Action start = () => { Debug.WriteLine(_start); log.WriteLine(_start); };
+                Action damage = () => { Debug.WriteLine(_dmg); log.WriteLine(_dmg); };
+                Action heal = () => { Debug.WriteLine(_heal); log.WriteLine(_heal); };
+
+                if (isTakeDmg && n == 0)
+                {
+                    Records.AddRecord("Records.ini", GameInterface.score);
+                    score();
+                }
+                if (startDebug == 0)
+                {
+                    startDebug++;
+                    start();
+                }
+                if (isTakeDmg && n >= 0)
+                {
+                    damage();
+                }
+                if (isTakeHealth && n < temp.Length-1)
+                {
+                    heal();
+                }
+            }
+
+        }
         public override void Draw()
         {
             if(isDeath)Dead();
             else
             {
-                HealthBar();
+                Debugger(); // Запись лога
+                HealthBar(); // Вывод хилбара
                 playerPos.X = Pos.X;
                 playerPos.Y = playerPosY;
                 if (!isShooting)

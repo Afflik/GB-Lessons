@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,8 @@ namespace Lession1
 {
     public partial class SplashScreen : Form
     {
-        public static GameScene game;
+        public static GameScene gameFormActive;
+
         Image title = Image.FromFile("Menu/title.png");
 
         Image play = Image.FromFile("Menu/play.png");
@@ -23,8 +25,6 @@ namespace Lession1
 
         Image exit = Image.FromFile("Menu/exit.png");
         Image exitOn = Image.FromFile("Menu/exitON.png");
-
-        GameInterface gInt = new GameInterface();
 
         static void Main()
         {
@@ -38,6 +38,7 @@ namespace Lession1
             InitializeComponent();
             MaximizeBox = false;
             MinimizeBox = false;
+            StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.FixedDialog;
 
 
@@ -62,7 +63,6 @@ namespace Lession1
         // Вызов формы с игрой
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            game = new GameScene();
             try
             {
                 Hide();
@@ -76,12 +76,14 @@ namespace Lession1
             }
         }
         //Создание игровой сцены c проверкой на разрешение окна
-        public static void GameSceneStart(int width, int height, FormStartPosition stPos)
+        public void GameSceneStart(int width, int height, FormStartPosition stPos)
         {
             if (width != 800) throw new ArgumentOutOfRangeException("width", "Ширина окна должна быть строго 800 пикселей!");
             else if (height != 600) throw new ArgumentOutOfRangeException("height", "Высота окна должна быть строго 600 пикселей!");
             else
             {
+                GameScene game = new GameScene();
+                gameFormActive = game;
                 game.Width = width;
                 game.Height = height;
                 game.StartPosition = stPos;
@@ -94,7 +96,10 @@ namespace Lession1
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-
+            Records.WriteRecords("records.ini");
+            RecordsScreen rs = new RecordsScreen();
+            Hide();
+            rs.Show();
         }
 
         private void pictureBox3_Click(object sender, EventArgs e)

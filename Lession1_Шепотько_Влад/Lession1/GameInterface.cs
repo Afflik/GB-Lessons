@@ -7,6 +7,7 @@ namespace Lession1
 {
     class GameInterface : Settings
     {
+        public static int score = 0;
         // основная функция для вывода текста на экран
         public static void Text(string _text,int size, int _x,int _y, SolidBrush _brush)
         {
@@ -22,6 +23,9 @@ namespace Lession1
             Text("LASER: ",15, 10, 38, new SolidBrush(Color.WhiteSmoke));
             if(Laser.counter == 40) Text(Laser.laserBar, 12, 85, 40, new SolidBrush(Color.Red));
             else Text(Laser.laserBar, 12, 85, 40, new SolidBrush(Color.DarkRed));
+
+            Text("SCORE: ", 16, 0, 69, new SolidBrush(Color.WhiteSmoke));
+            Text(score.ToString(), 15, 85, 69, new SolidBrush(Asteroids.color));
         }
 
         public override void Update() { }

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Lession1
 {
@@ -99,7 +101,8 @@ namespace Lession1
         //Render рисует картинку если открыта игра и закрывает приложение если закрыть игру
         public static void Render()
         {
-            if (Form.ActiveForm == SplashScreen.game) Buffer.Render();
+            _time = DateTime.Now.ToLongTimeString(); // Системное время
+            if (Form.ActiveForm == SplashScreen.gameFormActive) Buffer.Render();
             else Environment.Exit(0);
         }
         //Drawler рисует все объекты и обновляет их местоположение

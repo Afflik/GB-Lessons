@@ -8,6 +8,12 @@ namespace Lession1
 
     abstract class Settings: ICollision
     {
+
+        protected static string _time; // Системное время
+
+        protected static bool isCookie = false;
+        protected static bool isCake = false;
+
         public static Random rng = new Random();
 
         protected Point Pos;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace Lession1
 {
@@ -38,15 +39,15 @@ namespace Lession1
             }
             if (_cake == explosionCake[explosionCake.Count - 1]) // спавнит заново кейк после взрыва
             {
-                isCakeDroped = false;
                 Pos.X = rng.Next(800, 1200);
                 Pos.Y = rng.Next(1, 7) * 100;
                 Player.cooldownHeal = 0;
+                isCakeDroped = false;
             }
         }
         public override void Update(bool _bool)
         {
-            isCakeDroped = _bool;
+                isCakeDroped = _bool;
         }
 
         public override Rectangle Rect => new Rectangle(Pos, new Size(60,60));

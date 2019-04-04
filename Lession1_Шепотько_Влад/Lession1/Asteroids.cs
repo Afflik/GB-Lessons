@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace Lession1
 {
     class Asteroids: Settings
     {
+        public static Color color = Color.WhiteSmoke;
+
         protected static Size _size;
         protected int animCount = 0;
         protected Image cookie;
@@ -18,6 +21,8 @@ namespace Lession1
                                                            Image.FromFile("Cookies/boom/boom3.png"),Image.FromFile("Cookies/boom/boom4.png"),
                                                            Image.FromFile("Cookies/boom/boom5.png"),Image.FromFile("Cookies/boom/boom6.png") };
 
+        public int sc = 0;
+        public static int score = 200;
         protected bool isCrashed = false; //проверка имбирного астероида, был ли он взорван
 
         int cookieNum = rng.Next(0, 4);  // рандомный выбор одного из вариантов астероида
@@ -28,9 +33,9 @@ namespace Lession1
 
         public override void Draw()
         {
+            _size = Size;
             if (isCrashed) cookie = Animator(explosion, 3); // Запускает анимацию взрыва при получении урона
             else cookie = cookies[cookieNum];
-            _size = Size;
             Buffer.Graphics.DrawImage(cookie, Pos.X + waitTime, Pos.Y, Size.Width, Size.Height);
         }
         public override void Update()
@@ -47,10 +52,10 @@ namespace Lession1
                 Dir.X = rng.Next(5, 12);
                 Pos.Y = rng.Next(0, 7) * 100;
             }
-            if(cookie == explosion[explosion.Count - 1]) // спавнит заново метеор после взрыва
+            if (cookie == explosion[explosion.Count - 1]) // спавнит заново метеор после взрыва
             {
                 animTime++;
-                if(animTime == 3)
+                if (animTime == 3)
                 {
                     animTime = 0;
                     isCrashed = false;
@@ -58,11 +63,26 @@ namespace Lession1
                     Dir.X = rng.Next(5, 12);
                     Pos.Y = rng.Next(0, 7) * 100;
                     Player.cooldownDmg = 0;
+                    sc = 0;
                 }
             }
         }
         public override void Update(bool _bool)
         {
+            if (sc == 0 && Player.isShooting)
+            {
+                Action cookie = () => { Debug.WriteLine($"{_time}: " + "Котик испепелил пряник."); };
+                cookie();
+                color = Color.Yellow;
+                GameInterface.score += score;
+                sc++;
+            }
+            else if (Player.isTakeDmg && GameInterface.score > 0)
+            {
+                color = Color.Red;
+                GameInterface.score -= score;
+            }
+            else if (!Player.isTakeDmg || !Player.isShooting) color = Color.WhiteSmoke;
             isCrashed = _bool;
         }
 

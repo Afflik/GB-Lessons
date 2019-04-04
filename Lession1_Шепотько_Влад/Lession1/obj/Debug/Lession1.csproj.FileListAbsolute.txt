@@ -31,3 +31,4 @@ E:\Repozi\GBL\Lession2_Шепотько_Влад\Lession1\obj\Debug\Lession1.csp
 E:\Repozi\GBL\Lession2_Шепотько_Влад\Lession1\obj\Debug\Lession1.exe
 E:\Repozi\GBL\Lession2_Шепотько_Влад\Lession1\obj\Debug\Lession1.pdb
 E:\Repozi\GBL\Lession1_Шепотько_Влад\Lession1\obj\Debug\Lession1.EndGame.resources
+E:\Repozi\GBL\Lession1_Шепотько_Влад\Lession1\obj\Debug\Lession1.RecordsScreen.resources
