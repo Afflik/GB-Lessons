@@ -100,7 +100,7 @@ namespace Lession1
         }
         public static void Debugger() //Вывод лога в консоль и запись в файл
         {
-            using (StreamWriter log = File.AppendText("log.ini"))
+            using (StreamWriter log = File.AppendText("Logs/log.ini"))
             {
                 string _start = "\nНачинается игра!\n";
                 string _heal = $"{_time}: " + ((n == 2) ? "Кексик полностью залечил лицо котику." : "Кексик подлатал личико котика на одно HP.");
@@ -114,7 +114,7 @@ namespace Lession1
 
                 if (isTakeDmg && n == 0)
                 {
-                    Records.AddRecord("Records.ini", GameInterface.score);
+                    Records.AddRecord("Logs/Records.ini", GameInterface.score);
                     score();
                 }
                 if (startDebug == 0)

@@ -96,7 +96,7 @@ namespace Lession1
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            Records.WriteRecords("records.ini");
+            Records.WriteRecords("Logs/records.ini");
             RecordsScreen rs = new RecordsScreen();
             Hide();
             rs.Show();
