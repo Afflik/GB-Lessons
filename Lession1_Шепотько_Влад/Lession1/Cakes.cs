@@ -32,15 +32,15 @@ namespace Lession1
             {
                 Pos.X -= Dir.X;
             }
-            if (Pos.X < -40) // обычный спавн
+            if (Pos.X < -40 - rng.Next(500)) // обычный спавн
             {
-                Pos.X = rng.Next(800,1200);
+                Pos.X = rng.Next(800,1500);
                 Pos.Y = rng.Next(1, 7) * 100;
             }
             if (_cake == explosionCake[explosionCake.Count - 1]) // спавнит заново кейк после взрыва
             {
-                Pos.X = rng.Next(800, 1200);
-                Pos.Y = rng.Next(1, 7) * 100;
+                Pos.X = 1000 + rng.Next(1000);
+                Pos.Y = rng.Next(1, 14) * 50;
                 Player.cooldownHeal = 0;
                 isCakeDroped = false;
             }
