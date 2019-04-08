@@ -1,7 +1,0 @@
-E:\VisualStudio\Lession4\Lession4\bin\Debug\Lession4.exe.config
-E:\VisualStudio\Lession4\Lession4\bin\Debug\Lession4.exe
-E:\VisualStudio\Lession4\Lession4\bin\Debug\Lession4.pdb
-E:\VisualStudio\Lession4\Lession4\obj\Debug\Lession4.csprojAssemblyReference.cache
-E:\VisualStudio\Lession4\Lession4\obj\Debug\Lession4.csproj.CoreCompileInputs.cache
-E:\VisualStudio\Lession4\Lession4\obj\Debug\Lession4.exe
-E:\VisualStudio\Lession4\Lession4\obj\Debug\Lession4.pdb
