@@ -19,8 +19,7 @@ namespace Lession4
         {
             var d = dict.OrderBy(x => x.Value);
             foreach (var pair in d) Console.WriteLine($"{pair.Key} - {pair.Value}");
-            Console.ReadKey(true);
-            Start();
+            Menu.Main();
         }
     }
 }
