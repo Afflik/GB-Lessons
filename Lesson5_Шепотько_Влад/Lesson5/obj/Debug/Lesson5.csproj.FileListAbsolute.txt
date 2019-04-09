@@ -1,0 +1,17 @@
+E:\VisualStudio\Lesson5\Lesson5\bin\Debug\Lesson5.exe.config
+E:\VisualStudio\Lesson5\Lesson5\bin\Debug\Lesson5.exe
+E:\VisualStudio\Lesson5\Lesson5\bin\Debug\Lesson5.pdb
+E:\VisualStudio\Lesson5\Lesson5\obj\Debug\Lesson5.csprojAssemblyReference.cache
+E:\VisualStudio\Lesson5\Lesson5\obj\Debug\MainWindow.g.cs
+E:\VisualStudio\Lesson5\Lesson5\obj\Debug\App.g.cs
+E:\VisualStudio\Lesson5\Lesson5\obj\Debug\Lesson5_MarkupCompile.cache
+E:\VisualStudio\Lesson5\Lesson5\obj\Debug\MainWindow.baml
+E:\VisualStudio\Lesson5\Lesson5\obj\Debug\Lesson5.g.resources
+E:\VisualStudio\Lesson5\Lesson5\obj\Debug\Lesson5.Properties.Resources.resources
+E:\VisualStudio\Lesson5\Lesson5\obj\Debug\Lesson5.csproj.GenerateResource.cache
+E:\VisualStudio\Lesson5\Lesson5\obj\Debug\Lesson5.csproj.CoreCompileInputs.cache
+E:\VisualStudio\Lesson5\Lesson5\obj\Debug\Lesson5.exe
+E:\VisualStudio\Lesson5\Lesson5\obj\Debug\Lesson5.pdb
+E:\VisualStudio\Lesson5\Lesson5\obj\Debug\NewEmployee.g.cs
+E:\VisualStudio\Lesson5\Lesson5\obj\Debug\Lesson5_MarkupCompile.lref
+E:\VisualStudio\Lesson5\Lesson5\obj\Debug\NewEmployee.baml
