@@ -14,7 +14,10 @@
         <Button Content="Добавить" HorizontalAlignment="Center" Margin="163,85,168,16" VerticalAlignment="Center" Width="80" Click="AddEmployeeButton" Height="43"/>
         <TextBox HorizontalAlignment="Left" Height="28" Margin="10,41,0,0" TextWrapping="Wrap" Text="{Binding Employee}" VerticalAlignment="Top" Width="120" TextAlignment="Center"/>
         <TextBox HorizontalAlignment="Left" Height="28" Margin="146,41,0,0" TextWrapping="Wrap" Text="{Binding Departament}" VerticalAlignment="Top" Width="115" TextAlignment="Center"/>
-        <TextBox HorizontalAlignment="Left" Height="28" Margin="278,41,0,0" TextWrapping="Wrap" Text="{Binding Salary}" PreviewTextInput = "NumericOnly" VerticalAlignment="Top" Width="115" TextAlignment="Center"/>
+        <TextBox Name="salary" HorizontalAlignment="Left" Height="28" Margin="278,41,0,0" TextWrapping="Wrap" Text="{Binding Salary}" PreviewTextInput = "NumericOnly" VerticalAlignment="Top" Width="115" TextAlignment="Center"/>
+        <WrapPanel Margin="278,80,18,37" RenderTransformOrigin="0.5,0.5">
+            <TextBlock Text="{Binding Path=Text, ElementName=salary}" Width="115" Height="27" />
+        </WrapPanel>
         <Label Content="        Сотрудник                      Должность                       Зарплата" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="383" Height="26"/>
 
     </Grid>

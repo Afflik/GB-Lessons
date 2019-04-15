@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -28,123 +31,128 @@ namespace Lesson5
     {
         public static bool isAdded = false;  // Переменная для разрешения записи в файл
 
-        FileSystemWatcher watcher = new FileSystemWatcher();  // Переменная для проверки изменения файла
+        public static ObservableCollection<Row> EmployeeList = new ObservableCollection<Row>();
 
-        public static List<Row> EmployeeList = new List<Row>();
+        static string location = Directory.GetCurrentDirectory();
+        static string dbPath;
 
-        string line;
-        int column = 1; // Отвечает в какую колонну идет запись
+        static SqlConnection myDB;
+        SqlCommand command;
 
         public MainWindow()
         {
+            location = location.Remove(location.Length - 10);
+            dbPath = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={location}\db.mdf;Integrated Security=True;";
+            myDB = new SqlConnection(dbPath);
+
             LoadList();
 
             InitializeComponent();
             employeeGrid.ItemsSource = EmployeeList;
-            CreateFileWatcher();
-
             employeeGrid.CellEditEnding += employeeGrid_CellEditEnding;
         }
+
         public void LoadList()  // Создает коллекцию для отображения в таблице
         {
-            EmployeeList.Clear();
-            StreamReader readList = new StreamReader("list.ini", Encoding.Default);
-            while ((line = readList.ReadLine()) != null)
-            {
-                string employee = "";
-                string departament = "";
-                string salary = "";
 
-                foreach (char ch in line)
-                {
-                    if (ch == '|') column++; // Разделяет строку на переменные
-                    else
-                    {
-                        if (column == 1) employee += ch;
-                        else if (column == 2) departament += ch;
-                        else if (column == 3) salary += ch;
-                    }
-                }
-                    EmployeeList.Add(new Row { Employee = employee, Departament = departament, Salary = Convert.ToInt32(salary) });
-                column = 1;
+            int i = 0;
+            EmployeeList.Clear();
+            
+
+            string query = "SELECT * FROM List";
+            command = new SqlCommand(query, myDB);
+            myDB.Open();
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                EmployeeList.Add(new Row {
+                                           Employee = reader[0].ToString(),
+                                           Departament = reader[1].ToString(),
+                                           Salary = Convert.ToInt32(reader[2].ToString())
+                                         });
+                i++;
             }
-            readList.Close();
+            reader.Close();
+            myDB.Close();
+            i = 0;
         }
+
         private void NewRowButton(object sender, RoutedEventArgs e) // Открываем окно добавление строчки
         {
             NewEmployee win = new NewEmployee();
             win.Show();
         }
+
         private void ExitButton(object sender, RoutedEventArgs e) // Выход из приложения
         {
             Application.Current.Shutdown();
         }
+
         private void DeleteRowButton(object sender, RoutedEventArgs e)  // Удаляет выбранную строчку
         {
-            File.WriteAllText("list.ini", String.Empty);
-
-            StreamWriter writeList = new StreamWriter("list.ini", true, Encoding.Default);
-
             var index = employeeGrid.SelectedIndex;
-            for (int i = 0;i < EmployeeList.Count; i++ )
-            {
-                if(i != index) writeList.WriteLine($"{EmployeeList[i].Employee}|{EmployeeList[i].Departament}|{EmployeeList[i].Salary}");
-            }
-            writeList.Close();
+            string query = $"DELETE from List where Сотрудник = @Employee";
+            command = new SqlCommand(query, myDB);
+            command.Parameters.AddWithValue("@Employee", EmployeeList[index].Employee);
+
+            myDB.Open();
+            command.ExecuteNonQuery();
+            myDB.Close();
+
+
             Refresh();
-        }
-        public void CreateFileWatcher()  // Проверяет изменения списка сотрудников
-        {
-            watcher.Path = Directory.GetCurrentDirectory();
-            watcher.Filter = "list.ini";
-            watcher.Changed += new FileSystemEventHandler(OnChanged);
-            watcher.EnableRaisingEvents = true;
-        }
-        private void OnChanged(object source, FileSystemEventArgs e)
-        {
-            if (isAdded)
-            {
-                isAdded = false;
-                Refresh();
-            }
         }
         void employeeGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e) // Редактирование строк
         {
             if (e.EditAction == DataGridEditAction.Commit)
             {
-                File.WriteAllText("list.ini", String.Empty);
-
-                StreamWriter writeList = new StreamWriter("list.ini", true, Encoding.Default);
-
                 var column = e.Column as DataGridBoundColumn;
                 if (column != null)
                 {
+                    string query = "";
+                    var index = employeeGrid.SelectedIndex;
                     var _column = (column.Binding as Binding).Path.Path;
-                    int rowIndex = e.Row.GetIndex();
                     var el = e.EditingElement as TextBox;
-                    for (int i = 0; i < EmployeeList.Count; i++)
+                    if (_column == "Employee")
                     {
-                        if(i == rowIndex)
-                        {
-                            if (_column == "Employee") writeList.WriteLine($"{el.Text}|{EmployeeList[i].Departament}|{EmployeeList[i].Salary}");
-                            else if (_column == "Departament") writeList.WriteLine($"{EmployeeList[i].Employee}|{el.Text}|{EmployeeList[i].Salary}");
-                            else if (_column == "Salary") writeList.WriteLine($"{EmployeeList[i].Employee}|{EmployeeList[i].Departament}|{el.Text}");
-                        }
-                            else
-                        {
-                            writeList.WriteLine($"{EmployeeList[i].Employee}|{EmployeeList[i].Departament}|{EmployeeList[i].Salary}");
-                        }
+                        query = "update List set Сотрудник = @after where Сотрудник = @beforeEmp";
                     }
+                    else if (_column == "Departament")
+                    {
+                        query = "update List set Должность = @after where Должность = @beforeDep and Сотрудник = @beforeEmp";
+                    }
+                    else if (_column == "Salary")
+                    {
+                        query = "update List set Зарплата = @after where Зарплата = @beforeSal and Сотрудник = @beforeEmp";
+                    }
+                    command = new SqlCommand(query, myDB);
+                    command.Parameters.AddWithValue("@after", el.Text);
+                    command.Parameters.AddWithValue("@beforeEmp", EmployeeList[index].Employee);
+                    command.Parameters.AddWithValue("@beforeDep", EmployeeList[index].Departament);
+                    command.Parameters.AddWithValue("@beforeSal", EmployeeList[index].Salary);
+                    myDB.Open();
+                    command.ExecuteNonQuery();
+                    myDB.Close();
                 }
-                writeList.Close();
                 Refresh();
             }
         }
+
         public void Refresh() // Обновляет данные в таблице
         {
-            LoadList();
             Dispatcher.BeginInvoke(new ThreadStart(delegate
             {
+                LoadList();
+                employeeGrid.ItemsSource = null;
+                employeeGrid.ItemsSource = EmployeeList;
+            }));
+        }
+        public void Refresh(object sender, RoutedEventArgs e) // Обновляет данные в таблице
+        {
+            Dispatcher.BeginInvoke(new ThreadStart(delegate
+            {
+                LoadList();
                 employeeGrid.ItemsSource = null;
                 employeeGrid.ItemsSource = EmployeeList;
             }));
