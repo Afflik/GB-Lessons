@@ -1,0 +1,35 @@
+﻿<Window x:Class="Lesson5.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        ResizeMode="NoResize"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="442.258" WindowStyle="None">
+    <Window.Resources>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#FF61A9FF" Height="450" VerticalAlignment="Top" RenderTransformOrigin="0.533,0.474">
+        <DataGrid HorizontalAlignment="Center" Height="340" Margin="15,10,5,0" VerticalAlignment="Top" Width="308"/>
+        <DataGrid x:Name="employeeGrid" AutoGenerateColumns="False" HorizontalGridLinesBrush="LightGray"
+    RowBackground="White" AlternatingRowBackground="White" HorizontalAlignment="Center" Width="369" Margin="37,10,36,0" Height="353" VerticalAlignment="Top" CanUserDeleteRows="False" CanUserAddRows="False" CanUserResizeRows="False" Background="White" IsReadOnly ="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Сотрудник" Binding="{Binding Path=Employee}" Width="120" CanUserResize="False" Foreground="Black"/>
+                <DataGridTextColumn Header="Должность" Binding="{Binding Path=Departament}" Width="120" CanUserResize="False"/>
+                <DataGridTextColumn Header="Зарплата" Binding="{Binding Path=Salary}" Width="120" CanUserResize="False"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Добавить" HorizontalAlignment="Center" Margin="37,382,325,25" VerticalAlignment="Center" Width="80" Click="NewRowButton" Height="43" Background="#FF6AFF85"/>
+        <Button Content="Выход" HorizontalAlignment="Center" Margin="231,382,131,24" VerticalAlignment="Center" Width="80" Click="ExitButton" Height="44">
+            <Button.Background>
+                <SolidColorBrush Color="#FFFFFF6E"/>
+            </Button.Background>
+        </Button>
+        <Button Content="Удалить" HorizontalAlignment="Center" Margin="326,382,36,24" VerticalAlignment="Center" Width="80" Click="DeleteRowButton" Height="44" Background="#FFFF6464"/>
+        <Button Content="Обновить" HorizontalAlignment="Center" Margin="134,382,228,24" VerticalAlignment="Center" Width="80" Click="Refresh" Height="44" Background="#FFFF6EEB"/>
+    </Grid>
+
+</Window>
